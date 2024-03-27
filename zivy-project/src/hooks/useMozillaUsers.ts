@@ -9,16 +9,14 @@ const nextPattern = /(?<=<)([\S]*)(?=>; rel="Next")/i;
 const useMozillaUsers = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState<any[]>([]);
-  const [hasMoreItems, setHasMoreItems] = useState<boolean | string | null>(
-    false
-  );
+  const [hasMoreItems, setHasMoreItems] = useState<boolean>(false);
 
   const [nextPageUrl, setNextPageUrl] = useState(
     "https://api.github.com/orgs/mozilla/members?page=1"
   );
 
   const fetchUsers = useCallback(async () => {
-    if (isLoading) {
+    if (isLoading || !nextPageUrl) {
       return;
     }
     setIsLoading(true);
